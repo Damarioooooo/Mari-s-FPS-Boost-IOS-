@@ -1,0 +1,78 @@
+{
+	"geode": "5.11.2",
+	"gd": {
+		"ios": "2.2081"
+	},
+	"version": "v1.0.0",
+	"id": "lyophi.fpsboost",
+	"name": "iOS FPS Boost",
+	"developer": "lyophi",
+	"description": "A set of toggles that cut rendering work and stutter in levels on iOS.",
+	"tags": ["performance", "enhancement"],
+	"settings": {
+		"override-fps": {
+			"type": "bool",
+			"name": "Override Target FPS",
+			"description": "Use the Target FPS below instead of the game's own value. Your screen's refresh rate is still the real limit.",
+			"default": false
+		},
+		"target-fps": {
+			"type": "int",
+			"name": "Target FPS",
+			"default": 60,
+			"min": 30,
+			"max": 240,
+			"control": {
+				"slider": true
+			}
+		},
+		"disable-particles": {
+			"type": "bool",
+			"name": "Disable Particles In Levels",
+			"description": "Skips drawing particle effects while playing. Usually the biggest GPU saving.",
+			"default": true
+		},
+		"hide-glow": {
+			"type": "bool",
+			"name": "Hide Object Glow",
+			"description": "Hides glow sprites on objects, which cuts a lot of draw work.",
+			"default": true
+		},
+		"hide-trails": {
+			"type": "bool",
+			"name": "Hide Player Trails",
+			"description": "Hides the regular motion trail behind the player.",
+			"default": true
+		},
+		"hide-background": {
+			"type": "bool",
+			"name": "Hide Background",
+			"description": "Hides the level background.",
+			"default": false
+		},
+		"hide-middleground": {
+			"type": "bool",
+			"name": "Hide Middleground",
+			"description": "Hides the middleground layer.",
+			"default": false
+		},
+		"hide-ground": {
+			"type": "bool",
+			"name": "Hide Ground",
+			"description": "Hides the ground layers.",
+			"default": false
+		},
+		"pause-fps-saver": {
+			"type": "bool",
+			"name": "Low FPS While Paused",
+			"description": "Drops to 30 FPS in the pause menu to cool the device, which helps against thermal throttling.",
+			"default": true
+		},
+		"free-memory": {
+			"type": "bool",
+			"name": "Free Memory After Leaving A Level",
+			"description": "Clears unused textures after you quit a level to reduce stutter over a long session.",
+			"default": true
+		}
+	}
+}
