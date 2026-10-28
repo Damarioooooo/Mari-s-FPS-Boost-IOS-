@@ -2,7 +2,6 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include <Geode/modify/CCParticleSystemQuad.hpp>
 
 using namespace geode::prelude;
 
@@ -43,6 +42,18 @@ void applyVisuals(PlayLayer* pl) {
     }
 }
 
+// Hidden nodes are skipped by cocos2d's visit(), so their draw never runs.
+void hideParticles(CCNode* node) {
+    if (!node) return;
+    if (typeinfo_cast<CCParticleSystem*>(node)) {
+        node->setVisible(false);
+        return;
+    }
+    if (auto kids = node->getChildren()) {
+        for (auto child : CCArrayExt<CCNode*>(kids)) hideParticles(child);
+    }
+}
+
 void hideGlow(PlayLayer* pl) {
     if (!on("hide-glow") || !pl->m_objects) return;
     for (auto obj : CCArrayExt<GameObject*>(pl->m_objects)) {
@@ -72,6 +83,7 @@ class $modify(FpsPlayLayer, PlayLayer) {
         restoreFps();
         applyVisuals(this);
         hideGlow(this);
+        if (on("disable-particles")) hideParticles(this);
     }
 
     void resetLevel() {
@@ -104,13 +116,5 @@ class $modify(FpsPauseLayer, PauseLayer) {
     void onResume(CCObject* sender) {
         restoreFps();
         PauseLayer::onResume(sender);
-    }
-};
-
-class $modify(FpsParticles, CCParticleSystemQuad) {
-    void draw() {
-        // Only inside a level, so menu particles still look normal.
-        if (PlayLayer::get() && on("disable-particles")) return;
-        CCParticleSystemQuad::draw();
     }
 };
