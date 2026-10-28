@@ -54,8 +54,8 @@ void hideGlow(PlayLayer* pl) {
 
 $on_mod(Loaded) {
     applyFps();
-    listenForSettingChanges("override-fps", [](bool) { applyFps(); });
-    listenForSettingChanges("target-fps", [](int64_t) { applyFps(); });
+    listenForSettingChanges<bool>("override-fps", [](bool) { applyFps(); });
+    listenForSettingChanges<int64_t>("target-fps", [](int64_t) { applyFps(); });
 }
 
 class $modify(FpsMenuLayer, MenuLayer) {
